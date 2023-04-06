@@ -1,0 +1,45 @@
+MDScreen:
+    name: "signin"
+    MDFloatLayout:
+        Image:
+            source: 'picture/Logo.png'   
+            size_hint_y: None
+            pos_hint: {"center_x": .5, "center_y": .75}
+            width: 300
+            allow_stretch: True
+
+        MDTextField:
+            id: mail
+            multiline: False
+            size_hint: .7, .06
+            pos_hint: {"center_x": .5, "center_y": .4}
+            hint_text: "Enter email"
+            padding_horizontal: 5
+            padding_vertical: 5
+
+        MDTextField:
+            id: pass
+            multiline: False
+            size_hint: .7, .06
+            pos_hint: {"center_x": .5, "center_y": .325}
+            hint_text: "Enter password"
+            padding_horizontal: 5
+            padding_vertical: 5
+            password: True
+
+        MDTextField:
+            id: repass
+            multiline: False
+            size_hint: .7, .06
+            pos_hint: {"center_x": .5, "center_y": .325}
+            hint_text: "Enter password again"
+            padding_horizontal: 5
+            padding_vertical: 5
+            password: True
+
+        MDFlatButton:
+            text: "Sign In"
+            size_hint: .25, .1
+            pos_hint: {"center_x": .5, "center_y": .2}
+            on_release:
+                
