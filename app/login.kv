@@ -13,7 +13,7 @@ MDScreen:
             id: mail
             
             size_hint_x: .85
-            pos_hint: {"center_x": .5, "center_y": .52}
+            pos_hint: {"center_x": .5, "center_y": .57}
             hint_text: "Enter email"
             helper_textmode: "persistent"
             helper_text: ""
@@ -29,9 +29,16 @@ MDScreen:
             line_color_focus: 0,0,0,1
             password: True
 
+        MDTextButton:
+            text: "Sign In"
+            haling: "center"
+            size_hint: .25, .1
+            pos_hint: {"center_x": .5, "center_y": .1}
+            on_release: 
+                app.to_sign()
+
         MDFlatButton:
             text: "Login"
-            size_hint: .25, .1
             pos_hint: {"center_x": .5, "center_y": .2}
             on_release: 
                 app.check_login(mail.text ,passw.text)

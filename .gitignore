@@ -3,4 +3,5 @@ Lib/
 Scripts/
 share/
 app/api_file.bin
+app/mongodb_file.bin
 /test

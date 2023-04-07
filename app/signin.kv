@@ -10,36 +10,37 @@ MDScreen:
 
         MDTextField:
             id: mail
-            multiline: False
-            size_hint: .7, .06
-            pos_hint: {"center_x": .5, "center_y": .4}
+            size_hint_x: .85
+            pos_hint: {"center_x": .5, "center_y": .55}
             hint_text: "Enter email"
-            padding_horizontal: 5
-            padding_vertical: 5
+            helper_textmode: "persistent"
+            helper_text: ""
+            line_color_focus: 0,0,0,1
 
         MDTextField:
-            id: pass
-            multiline: False
-            size_hint: .7, .06
-            pos_hint: {"center_x": .5, "center_y": .325}
+            id: passw
+            size_hint_x: .85
+            pos_hint: {"center_x": .5, "center_y": .425}
             hint_text: "Enter password"
-            padding_horizontal: 5
-            padding_vertical: 5
+            helper_textmode: "persistent"
+            helper_text: ""
+            line_color_focus: 0,0,0,1
             password: True
 
         MDTextField:
             id: repass
-            multiline: False
-            size_hint: .7, .06
-            pos_hint: {"center_x": .5, "center_y": .325}
-            hint_text: "Enter password again"
-            padding_horizontal: 5
-            padding_vertical: 5
+            size_hint_x: .85
+            pos_hint: {"center_x": .5, "center_y": .3}
+            hint_text: "Enter password"
+            helper_textmode: "persistent"
+            helper_text: ""
+            line_color_focus: 0,0,0,1
             password: True
 
         MDFlatButton:
             text: "Sign In"
             size_hint: .25, .1
-            pos_hint: {"center_x": .5, "center_y": .2}
+            pos_hint: {"center_x": .5, "center_y": .15}
             on_release:
+                app.signin(mail.text, passw.text, repass.text)
                 
