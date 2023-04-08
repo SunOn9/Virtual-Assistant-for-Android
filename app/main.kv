@@ -2,12 +2,13 @@
     size_hint_y: None
     pos_hint: {"right": .98}
     height: self.texture_size[1]
-    paddding: 30, 20
+    paddding: 15, 20
     theme_text_color: "Custom"
     text_color: 1,1,1,1
     canvas.before:
         Color:
-            rgb: (1, 170/255, 23/255,1)
+            rgb: app.theme_cls.primary_color
+            #rgb: (1, 170/255, 23/255,1)
         RoundedRectangle:
             size: self.width, self.height
             pos: self.pos
@@ -15,10 +16,10 @@
     size_hint_y: None
     pos_hint: {"x": .02}
     height: self.texture_size[1]
-    paddding: 30, 20
+    paddding: 15, 20
     canvas.before:
         Color:
-            rgb: (1,1,1,1)
+            rgb: (222/255,222/255,222/255,1)
         RoundedRectangle:
             size: self.width, self.height
             pos: self.pos
@@ -28,9 +29,11 @@ MDScreen:
     chat_list: chat_list
     text_input: question.text
     scroll: scroll
+    on_leave:
+        question.text = ""
     MDFloatLayout:
         MDLabel:
-            text: "MAINAPP"
+            text: "VAFA"
             pos_hint: {"center_y": .94}
             halign: "center"
         ScrollView:

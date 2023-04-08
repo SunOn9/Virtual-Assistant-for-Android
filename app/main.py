@@ -1,7 +1,7 @@
 import requests
 import re
 import pymongo
-import datetime
+from time import localtime, strftime
 from kivymd.app import MDApp
 from kivymd.toast import toast
 from kivy.lang import Builder
@@ -20,7 +20,7 @@ myclient = pymongo.MongoClient(mongo_id)
 mydb = myclient["vafa"]
 myuser = mydb["user"]
 myhis = mydb["history"]
-global current_id
+
 Window.size = (350,500)
 
 class Response(MDLabel):
@@ -34,9 +34,16 @@ class Command(MDLabel):
     size_hint_x = NumericProperty()
     halign = StringProperty()
     font_size = 13
-    
-class MainApp(MDApp):
 
+class Time(MDLabel):
+    text = StringProperty()
+    size_hint_x = NumericProperty()
+    halign = StringProperty()
+    font_size = 10
+        
+class MainApp(MDApp):
+    current_id = ""
+    
     def build(self):
         global screen_manager
         screen_manager = ScreenManager()
@@ -59,7 +66,7 @@ class MainApp(MDApp):
             
     def to_login(self):
         screen_manager.transition.direction = "right"
-        current_id = ""
+        MainApp.current_id = ""
         screen_manager.current = "login"
         
     def to_main(self):
@@ -104,8 +111,7 @@ class MainApp(MDApp):
                     if myuser.count_documents(myquery):
                         user = myuser.find(myquery)[0]
                         if passw == user["password"]:
-                            current_id = user["_id"]
-                            print(current_id)
+                            MainApp.current_id = user["_id"]
                             MainApp.to_main(self)
                         else:    
                             toast("Incorrect Password !!!")
@@ -144,7 +150,7 @@ class MainApp(MDApp):
             halign="center"
         else:
             size = .9
-            halign="left"
+            halign="justify"
         screen_manager.get_screen(screen).chat_list.add_widget(Response(text=text, size_hint_x=size, halign=halign))              
      
     def us_ques(screen, text):
@@ -165,18 +171,25 @@ class MainApp(MDApp):
             halign="center"
         else:
             size = .9
-            halign="left" 
+            halign="justify" 
         screen_manager.get_screen(screen).chat_list.add_widget(Command(text=text, size_hint_x=size, halign=halign))
         if screen == ("main"):
             screen_manager.get_screen(screen).scroll.scroll_y = 0.1
-        
+            
+    def time_his(text):
+        size = 1
+        halign = "center"
+        screen_manager.get_screen("hist").chat_list.add_widget(Time(text=text, size_hint_x=size, halign=halign))
+            
     def load_his(self):
-        print(current_id)
-        myquery = {"id": current_id}
+        
+        myquery = {"id": MainApp.current_id}
         data = myhis.find(myquery)
         for doc in data:
+            MainApp.time_his(doc["time"])
             MainApp.us_ques("hist", doc["question"])
             MainApp.as_res("hist", doc["response"])
+            
          
     def chat_bot(self, question):
         if MainApp.connect_test(self):    
@@ -206,9 +219,9 @@ class MainApp(MDApp):
                     MainApp.as_res("main", data["content"])
                 
                 #push data to DB
-                now = datetime.datetime.now()
+                now = strftime("%H:%M:%S   %d/%m/%Y", localtime())
                 history = {
-                    "id": current_id,
+                    "id": MainApp.current_id,
                     "question": question,
                     "response": data["content"],
                     "time": now,
