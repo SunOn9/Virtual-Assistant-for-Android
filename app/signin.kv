@@ -1,10 +1,21 @@
 MDScreen:
     name: "signin"
+    on_leave:
+        mail.text = ""
+        passw.text = ""
+        repass.text = ""
+    MDRectangleFlatButton:
+        text: "Back"
+        pos_hint:{"right":0.2,"top": .98}
+        on_release:
+            app.to_login()
+
     MDFloatLayout:
+        
         Image:
             source: 'picture/Logo.png'   
             size_hint_y: None
-            pos_hint: {"center_x": .5, "center_y": .75}
+            pos_hint: {"center_x": .5, "center_y": .85}
             width: 300
             allow_stretch: True
 
@@ -13,34 +24,30 @@ MDScreen:
             size_hint_x: .85
             pos_hint: {"center_x": .5, "center_y": .55}
             hint_text: "Enter email"
-            helper_textmode: "persistent"
-            helper_text: ""
-            line_color_focus: 0,0,0,1
+            required: True
+            mode: "rectangle"
 
         MDTextField:
             id: passw
             size_hint_x: .85
             pos_hint: {"center_x": .5, "center_y": .425}
             hint_text: "Enter password"
-            helper_textmode: "persistent"
-            helper_text: ""
-            line_color_focus: 0,0,0,1
+            required: True
             password: True
+            mode: "rectangle"
 
         MDTextField:
             id: repass
             size_hint_x: .85
             pos_hint: {"center_x": .5, "center_y": .3}
-            hint_text: "Enter password"
-            helper_textmode: "persistent"
-            helper_text: ""
-            line_color_focus: 0,0,0,1
+            hint_text: "Enter password again"
+            required: True
             password: True
+            mode: "rectangle"
 
-        MDFlatButton:
+        MDRectangleFlatButton:
             text: "Sign In"
-            size_hint: .25, .1
             pos_hint: {"center_x": .5, "center_y": .15}
             on_release:
-                app.signin(mail.text, passw.text, repass.text)
+                app.signin(mail.text ,passw.text, repass.text) if mail.text != "" and passw.text != "" and repass.text != "" else app.message("Please do not leave the field blank !!!")
                 

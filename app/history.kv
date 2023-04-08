@@ -24,19 +24,20 @@
             pos: self.pos
 
 MDScreen:   
-    name: "main"
+    name: "hist"
     chat_list: chat_list
-    text_input: question.text
     scroll: scroll
+    on_enter:
+        app.load_his()
     MDFloatLayout:
         MDLabel:
-            text: "MAINAPP"
+            text: "HISTORY"
             pos_hint: {"center_y": .94}
             halign: "center"
         ScrollView:
             id: scroll
-            size_hint_y: .77
-            pos_hint: {"x": 0, "y": .116}
+            size_hint_y: .9
+            pos_hint: {"x": 0, "y": 0}
             do_sroll_x: False
             do_sroll_y: True
             MDBoxLayout:
@@ -48,32 +49,10 @@ MDScreen:
                 pos_hint: {'top': 10}
                 cols: 1
                 spacing: 5
-                
-        MDFloatLayout:
-            pos_hint: {"center_x": .5, "center_y": .22}
-            MDTextField:
-                id: question
-                size_hint_x: .7
-                pos_hint: {"center_x": .39, "center_y": .34}
-                hint_text: "Type here ..."
-                mode: "round"
-
-            MDRectangleFlatButton:
-                text: "Send"
-                pos_hint: {"center_x": .88, "center_y": .34}
-                on_release:
-                    app.chat_bot(question.text) if question.text != "" else app.message("Please do not leave the field blank !!!")
-                    question.text = ""
 
     MDRectangleFlatButton:
-        text: "Logout"
-        pos_hint:{"right":0.25,"top": .98}
+        text: "Back"
+        pos_hint:{"right":0.2,"top": .98}
         on_release:
-            app.to_login()
-            app.clear("main")
-    
-    MDRectangleFlatButton:
-        text: "History"
-        pos_hint:{"right": .98,"top": .98}
-        on_release:
-            app.to_hist()
+            app.to_main()
+            app.clear("hist")
