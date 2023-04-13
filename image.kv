@@ -1,0 +1,82 @@
+<Command>
+    size_hint_y: None
+    pos_hint: {"right": .98}
+    height: self.texture_size[1]
+    paddding: 15, 20
+    theme_text_color: "Custom"
+    text_color: 1,1,1,1
+    canvas.before:
+        Color:
+            #rgb: app.theme_cls.primary_color
+            rgb: (1, 170/255, 23/255,1)
+        RoundedRectangle:
+            size: self.width, self.height
+            pos: self.pos
+<MyImage>
+    size_hint_y: None
+    pos_hint: {"center_x": .05}
+    height: 600
+    paddding: 15, 20
+    
+MDScreen:   
+    name: "img"
+    chat_list: chat_list
+    text_input: question.text
+    scroll: scroll
+    on_leave:
+        question.text = ""
+
+    MDFloatLayout:
+
+        
+
+        ScrollView:
+            id: scroll
+            size_hint_y: .77
+            pos_hint: {"x": 0, "y": .116}
+            do_sroll_x: False
+            do_sroll_y: True
+            MDBoxLayout:
+                id: chat_list
+                orientation: 'vertical'
+                size: (root.width, root.height)
+                height: self.minimum_height
+                size_hint: None, None
+                pos_hint: {'top': 10}
+                cols: 1
+                spacing: 5
+                
+        MDFloatLayout:
+            pos_hint: {"center_x": .5, "center_y": .22}
+            MDTextField:
+                id: question
+                size_hint_x: .7
+                pos_hint: {"center_x": .39, "center_y": .34}
+                hint_text: "Type here ..."
+                mode: "round"
+
+            MDRectangleFlatButton:
+                text: "Send"
+                pos_hint: {"center_x": .88, "center_y": .34}
+                on_release:
+                    app.img_bot(question.text) if question.text != "" else app.message("Please do not leave the field blank !!!")
+                    question.text = ""
+
+    MDRectangleFlatButton:
+        text: "Logout"
+        pos_hint:{"right":0.25,"top": .98}
+        on_release:
+            app.to_login()
+            app.clear("main")
+    
+    MDRectangleFlatButton:
+        text: "History"
+        pos_hint:{"right": .98,"top": .98}
+        on_release:
+            app.to_hist()
+
+    MDRectangleFlatButton:
+        text: "Text"
+        pos_hint:{"right": .6, "top": .98}
+        on_release:
+            app.to_main()
